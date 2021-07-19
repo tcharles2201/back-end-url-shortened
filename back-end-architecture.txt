@@ -1,0 +1,68 @@
+Back-end Architecture
+                   
+/src/index.js  ==> Entrypoint
+
+/src/app.js ==> Entrypoint
+
+/src/controllers/        ===> Main Controllers
+
+    /src/controllers/users ====> Views/Components related to Users
+
+    /src/controllers/links ====> Views/Components related to Links
+
+    /src/controllers/auth ====> Views/Components related to Authentication
+
+    /src/controllers/options ====> Views/Components related to views that are not related to users, links, and Authentication
+
+        /src/controllers/components/home
+
+
+/src/routes/        ===> Main Routes
+
+    /src/routes/users ====> Routes related to Users
+
+    /src/routes/links ====> Routes related to Links
+
+    /src/routes/auth ====> Routes related to Authentication
+
+    /src/routes/options ====> Routes related to views that are not related to users, links, and Authentication
+
+
+/src/middleware/        ===> Middlewares
+
+
+/src/lib            ===> Custom library
+
+    /src/lib/errors/           ===> Errors handling
+
+
+    /src/lib/services/          ====> Logic, Operations used by the controllers
+
+        /src/lib/services/users         ===> Users Model
+
+        /src/lib/services/links         ===> Links Model
+
+        /src/lib/services/auth          ====> Authentication Model
+
+        /src/lib/services/options       ===>  Models not(Users, Links, Auth)
+
+
+    /src/lib/models/          ====> Models used by the services
+
+        /src/lib/models/users         ===> Users Model
+
+        /src/lib/models/links         ===> Links Model
+
+        /src/lib/models/auth          ====> Authentication Model
+
+        /src/lib/models/options       ===>  Models not(Users, Links, Auth)
+
+
+/src/tests          ===> Testing script
+
+    /src/tests/users    ===> Users testing script 
+
+    /src/tests/links    ===> Links testing script 
+
+    /src/tests/auth     ===> Auth testing script
+
