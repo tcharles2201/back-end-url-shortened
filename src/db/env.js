@@ -5,6 +5,8 @@ const env = {
     host: process.env.HOST,
     dialect: "mysql",
   };
+  
 
-module.exports = env;
+
+  module.exports = env;
   

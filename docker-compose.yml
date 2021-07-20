@@ -24,6 +24,8 @@ services:
       - 'npm install && npm start'
     ports:
      - "8125:8125"
+    env_file:
+     - .env
     depends_on:
      - db
     restart: on-failure
