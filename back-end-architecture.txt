@@ -6,13 +6,13 @@ Back-end Architecture
 
 /src/controllers/        ===> Main Controllers
 
-    /src/controllers/users ====> Views/Components related to Users
+    /src/controllers/users ====> Controllers related to Users
 
-    /src/controllers/links ====> Views/Components related to Links
+    /src/controllers/links ====> Controllers related to Links
 
-    /src/controllers/auth ====> Views/Components related to Authentication
+    /src/controllers/auth ====> Controllers related to Authentication
 
-    /src/controllers/options ====> Views/Components related to views that are not related to users, links, and Authentication
+    /src/controllers/options ====>Controllers  related to views that are not related to users, links, and Authentication
 
         /src/controllers/components/home
 
@@ -30,10 +30,19 @@ Back-end Architecture
 
 /src/middleware/        ===> Middlewares
 
-
 /src/lib            ===> Custom library
 
     /src/lib/errors/           ===> Errors handling
+
+    /src/lib/validation/          ====> Validation
+
+        /src/lib/validation/users         ===> Users Validation
+
+        /src/lib/validation/links         ===> Links Validation
+
+        /src/lib/validation/auth          ====> Authentication Validation
+
+        /src/lib/validation/options       ===>  Validation not(Users, Links, Auth)
 
 
     /src/lib/services/          ====> Logic, Operations used by the controllers
