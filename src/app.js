@@ -21,7 +21,6 @@ db.sequelize.sync();
 console.log("connection ok :::::")
  
 
-
 autoloading(app);
 
 app.listen(process.env.PORT, process.env.HOSTNAME, () => {
