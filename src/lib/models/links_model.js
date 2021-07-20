@@ -40,6 +40,18 @@ class Links extends Table{
         }
     }
 
+    static fromId(id){
+        if (process.env.PORT === 80){
+            const url = `${process.env.SCHEME}://${process.env.HOST}/${id}`;
+
+            return (url);
+        }
+        else {
+            const url = `${process.env.SCHEME}://${process.env.HOST}:${process.env.PORT}/${id}`;
+
+            return (url);
+        }
+    }
 }
 
 Links.init({

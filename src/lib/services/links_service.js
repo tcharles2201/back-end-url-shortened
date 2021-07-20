@@ -22,28 +22,26 @@ class LinkServices {
 
     async newLink(args){
         const id = UniqueId(this.checkId);
-        console.log(id);
-        const url = `${process.env.SCHEME}://${process.env.HOST}/${id}`;
+        const url = Links.fromId(id);
 
         args.shortened_url = url;
         return (await this.save(args));
     }
 
-    deleteOne(link){
-
+    async deleteOne(link){
+        await link.destroy();
     }
 
     async updateOne(args){
         const link = new Links(args);
-        const saved = await link.save();
+        const saved = await link.set(args);
 
         return (saved);
     }
 
-
     async refreshLink(args){
         const id = UniqueId(this.checkId);
-        const url = `${process.env.SCHEME}://${process.env.HOST}/${id}`;
+        const url = Links.fromId(id);
 
         args.shortened_url = url;
         return (await this.updateOne(args));
@@ -64,14 +62,14 @@ class LinkServices {
     }
 
     async checkId(id){
-        const url = `${process.env.SCHEME}://${process.env.HOST}/${id}`;
+        const url = Links.fromId(id);
         const list = await Links.findAll({
             where: {
                 shortened_url: url
             }
         });
 
-        console.log(url);
+
         return (list.length === 0);
     }
 

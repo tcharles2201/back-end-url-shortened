@@ -1,3 +1,4 @@
+const Links = require("../lib/models/links_model");
 const LinkService = require("../lib/services/links_service");
 
 exports.save = async (req, res) => {
@@ -8,8 +9,6 @@ exports.save = async (req, res) => {
         res.status(201).json(saved);
     }
     catch(e){
-        console.log(e);
-        console.log(e.message);
         res.status(400).end();
     }
 };
@@ -21,10 +20,26 @@ exports.findAll = async (req, res) => {
     res.json(list);
 };
 
+exports.deleteOne  = async (req, res) => {
+    const service = new LinkService();
+
+    try {
+        const link = await service.findById(req.params.id);
+        await service.deleteOne(link);
+
+        res.status(200).json({
+            message: "the link is delete"
+        });
+    }
+    catch (e){
+        res.status(400).end();
+    }
+}
+
 exports.redirectTo = async (req, res) => {
     const service = new LinkService();
     const code = req.params.code;
-    const url = `${process.env.SCHEME}://${process.env.HOST}/${code}`;
+    const url = Links.fromId(code);
     const link = await service.getLink(url);
 
 
@@ -40,5 +55,18 @@ exports.redirectTo = async (req, res) => {
         res.status(200).json({
             url: link.base_url
         });
+    }
+};
+
+exports.updateOne = async (req, res) => {
+    const service = new LinkService();
+
+    try {
+        const list = await service.refreshLink(req.body);
+
+        res.json(list);
+    }
+    catch (e){
+        res.status(400).end();
     }
 };
