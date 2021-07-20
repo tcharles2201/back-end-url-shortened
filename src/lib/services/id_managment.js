@@ -1,7 +1,7 @@
 const MaxAttempsError = require("../errors/max_attempts_error");
 
 function IdGenerator() {
-    return 'xxxx4xxyxx4xx'.replace(/[xy]/g, function (c) {
+    return 'xxxx4xxyxx4xxxx4xxy4x'.replace(/[xy]/g, function (c) {
         var r = Math.floor(Math.random() * 16);
 
         return r.toString(16);

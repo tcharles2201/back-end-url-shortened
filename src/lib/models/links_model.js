@@ -1,6 +1,6 @@
 const Table = require("./table_model");
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
+const { DataTypes } = require('sequelize');
+const sequelize = require("../../db/db_connection");
 
 class Links extends Table{
     constructor(args){
@@ -27,6 +27,9 @@ class Links extends Table{
     hasExpired(){
         const date = new Date();
         
+        if (!this.expired_at){
+            return (false);
+        }
         return (date.getTime() > this.expired_at.getTime());
     }
 
