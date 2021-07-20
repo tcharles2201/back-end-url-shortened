@@ -1,5 +1,5 @@
 const Links = require("../models/links_model");
-
+const UniqueId = require("./id_managment").UniqueId;
 
 class LinkServices {
 
@@ -20,13 +20,34 @@ class LinkServices {
         return (saved);
     }
 
+    async newLink(args){
+        const id = UniqueId(this.checkId);
+        const url = `${process.env.SCHEME}://${process.env.HOST}/${id}`;
+
+        args.shortened_url = url;
+        return (await this.save(args));
+    }
+
     deleteOne(link){
 
     }
 
     updateOne(link){
+        const link = new Links(args);
+        const saved = await link.save();
 
+        return (saved);
     }
+
+
+    async refreshLink(args){
+        const id = UniqueId(this.checkId);
+        const url = `${process.env.SCHEME}://${process.env.HOST}/${id}`;
+
+        args.shortened_url = url;
+        return (await this.updateOne(args));
+    }
+
 
     async findById(id){
         return (await Links.findByPk(id));
@@ -39,6 +60,29 @@ class LinkServices {
             },
             order: [["id", "ASC"]]
         }));
+    }
+
+    async checkId(id){
+        const list = await Links.findAll({
+            where: {
+                shortened_url: `${process.env.SCHEME}://${process.env.HOST}/${id}`
+            }
+        });
+
+        return (list.length > 0);
+    }
+
+    async getLink(link){
+        const list = await Links.findAll({
+            where: {
+                shortened_url: link
+            }
+        });
+
+        if (list.length){
+            return (list[0]);
+        }
+        return (null);
     }
 
     async findByUserId(userId){
