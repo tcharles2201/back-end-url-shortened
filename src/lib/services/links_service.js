@@ -41,8 +41,11 @@ class LinkServices {
         }));
     }
 
-    async findByUserId(){
+    async findByUserId(userId){
         return (await Links.findAll({
+            where: {
+                user_id: userId
+            },
             order: [["id", "ASC"]]
         }));
     }
