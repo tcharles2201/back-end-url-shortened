@@ -1,7 +1,7 @@
 # back-end-url-shortened
 
-# Shortened Url
-Serveur de l'application :notebook_with_decorative_cover: Shortened Url, dans le cadre du projet sur le module de **Panaroma JS** de l'année 2021-2022 du **« Mastère  Développeur Front Servicenow »  - titre Chef(fe) de projets Informatique** à l'école : **La Passerelle des Métiers du Numérique**.
+# Project URL Shortener
+Serveur de l'application :notebook_with_decorative_cover: URL Shortened, dans le cadre du projet sur le module de **Panaroma JS** de l'année 2021-2022 du **« Mastère  Développeur Front Servicenow »  - titre Chef(fe) de projets Informatique** à l'école : **La Passerelle des Métiers du Numérique**.
 
 Les membres du groupe sont :
 - Ouahab Fenniche
@@ -34,4 +34,4 @@ Voici les principales technologies et framework utilisé dans le projet :
 ## Partie Frontend du projet
 
 Voici le lien vers la partie Frontend de notre projet :
-- [Frontend url shortened](https://github.com/tcharles2201/front-end-url-shortened)
+- [Frontend URL Shortened](https://github.com/tcharles2201/front-end-url-shortened)
