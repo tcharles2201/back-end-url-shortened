@@ -4,6 +4,7 @@ const sequelize = require("../../db/db_connection");
 
 class Links extends Table{
     constructor(args){
+        super();
         this.id = args["id"];
         this.base_url = args["base_url"];
         this.shortened_url = args["shortened_url"];
@@ -42,7 +43,10 @@ class Links extends Table{
 }
 
 Links.init({
-    id: DataTypes.NUMBER,
+    id: {
+       type: DataTypes.NUMBER,
+       primaryKey: true
+    },
     base_url: DataTypes.STRING,
     shortened_url: DataTypes.STRING,
     is_anonymous: DataTypes.NUMBER,
@@ -61,3 +65,4 @@ Links.init({
     ]
 });
 
+module.exports = Links;

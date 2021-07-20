@@ -22,6 +22,7 @@ class LinkServices {
 
     async newLink(args){
         const id = UniqueId(this.checkId);
+        console.log(id);
         const url = `${process.env.SCHEME}://${process.env.HOST}/${id}`;
 
         args.shortened_url = url;
@@ -32,7 +33,7 @@ class LinkServices {
 
     }
 
-    updateOne(link){
+    async updateOne(args){
         const link = new Links(args);
         const saved = await link.save();
 
@@ -63,13 +64,15 @@ class LinkServices {
     }
 
     async checkId(id){
+        const url = `${process.env.SCHEME}://${process.env.HOST}/${id}`;
         const list = await Links.findAll({
             where: {
-                shortened_url: `${process.env.SCHEME}://${process.env.HOST}/${id}`
+                shortened_url: url
             }
         });
 
-        return (list.length > 0);
+        console.log(url);
+        return (list.length === 0);
     }
 
     async getLink(link){

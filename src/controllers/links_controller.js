@@ -3,17 +3,13 @@ const LinkService = require("../lib/services/links_service");
 exports.save = async (req, res) => {
     try {
         const service = new LinkService();
-<<<<<<< HEAD
         const saved = await service.newLink(req.body);
     
         res.status(201).json(saved);
-=======
-        const saved = await service.save(req.body);
-    
-        res.json(saved);
->>>>>>> 2aa9968db6575c0ceb5554e39ee23aa6938c46da
     }
     catch(e){
+        console.log(e);
+        console.log(e.message);
         res.status(400).end();
     }
 };
@@ -24,7 +20,6 @@ exports.findAll = async (req, res) => {
 
     res.json(list);
 };
-<<<<<<< HEAD
 
 exports.redirectTo = async (req, res) => {
     const service = new LinkService();
@@ -32,16 +27,18 @@ exports.redirectTo = async (req, res) => {
     const url = `${process.env.SCHEME}://${process.env.HOST}/${code}`;
     const link = await service.getLink(url);
 
-    if (link.hasExpired()){
+
+    if (!link){
+        res.status(404).end();
+    }
+    else if (link.hasExpired()){
         res.status(400).json({
             message: "The link has expired"
         });
     }
     else {
         res.status(200).json({
-            shortened_url: link.shortened_url
+            url: link.base_url
         });
     }
 };
-=======
->>>>>>> 2aa9968db6575c0ceb5554e39ee23aa6938c46da

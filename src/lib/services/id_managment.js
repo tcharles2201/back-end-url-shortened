@@ -16,7 +16,7 @@ function UniqueId(checkId){
     while (i < MAX_ATTEMPTS){
         const id = IdGenerator();
 
-        if (!checkId(id)){
+        if (checkId(id)){
             return (id);
         }
     }

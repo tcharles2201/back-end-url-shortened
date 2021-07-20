@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-let linksSchema = Joi.object().keys({
+const linksSchema = Joi.object({
     id: Joi.number(),
     base_url: Joi.string(),
     shortened_url: Joi.string(),
@@ -11,4 +11,6 @@ let linksSchema = Joi.object().keys({
     updated_at: Joi.date()
 });
 
-module.exports = linksSchema;
+module.exports = {
+    linksSchema
+};
