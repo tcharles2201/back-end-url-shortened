@@ -1,15 +1,19 @@
-// import sequelize
-const Sequelize = require('sequelize');
- 
-// create connection
-const db = new Sequelize(
-    process.env.DB_DATABASE,
-    process.env.DB_USER,
-    process.env.DB_PASS,    
-    {
-        host: 'localhost',
-        dialect: 'mysql'
-    });
-db.sync()
+const env = require("./env.js");
+
+const Sequelize = require("sequelize");
+
+const sequelize = new Sequelize(env.database, env.username, env.password, {
+  host: env.host,
+  dialect: env.dialect,
+  operatorsAliases: false,
+});
+
+const db = {};
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+//Models
+//db.user = require("../lib/models/users/user_model")(sequelize, Sequelize);
 
 module.exports = db;
