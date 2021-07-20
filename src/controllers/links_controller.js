@@ -3,9 +3,15 @@ const LinkService = require("../lib/services/links_service");
 exports.save = async (req, res) => {
     try {
         const service = new LinkService();
+<<<<<<< HEAD
         const saved = await service.newLink(req.body);
     
         res.status(201).json(saved);
+=======
+        const saved = await service.save(req.body);
+    
+        res.json(saved);
+>>>>>>> 2aa9968db6575c0ceb5554e39ee23aa6938c46da
     }
     catch(e){
         res.status(400).end();
@@ -18,6 +24,7 @@ exports.findAll = async (req, res) => {
 
     res.json(list);
 };
+<<<<<<< HEAD
 
 exports.redirectTo = async (req, res) => {
     const service = new LinkService();
@@ -36,3 +43,5 @@ exports.redirectTo = async (req, res) => {
         });
     }
 };
+=======
+>>>>>>> 2aa9968db6575c0ceb5554e39ee23aa6938c46da
