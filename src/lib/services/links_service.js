@@ -69,7 +69,6 @@ class LinkServices {
             }
         });
 
-
         return (list.length === 0);
     }
 
