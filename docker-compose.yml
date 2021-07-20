@@ -31,6 +31,8 @@ services:
      - DATABASE_HOST=db
      - PORT=8125
      - HOSTNAME=0.0.0.0
+     - HOST=localhost
+     - SCHEME=http
     volumes:
      - ./src:/app/api
   pma:
