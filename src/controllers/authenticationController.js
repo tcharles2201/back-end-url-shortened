@@ -1,20 +1,20 @@
 const User = require('../lib/models/users/user_model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const db = require("../db/database");
+const db = require("../db/db_connection");
 const saltRounds = 10;
 
 exports.isUserAuth = (req, res) => {
 
-  res.send("Hi! You are authenticated. Congratulations!");
+  res.json({ message: "Hi! You are authenticated. Congratulations!"});
 
 };
 
 exports.userRegister = (req, res) => {
-      const firstName = req.body.firstName;
-      const lastName = req.body.lastName;
+      const firstname = req.body.firstname;
+      const lastname = req.body.lastname;
       const role = req.body.role;
-      const mail = req.body.mail;
+      const email = req.body.email;
       const password = req.body.password;
   
       bcrypt.hash(password, saltRounds, (err, hash) => {
@@ -24,8 +24,12 @@ exports.userRegister = (req, res) => {
         }
         else {
 
-          User.create({ firstname: firstName, lastname: lastName, role: role, mail: mail, password: password }).then(function() {
-            res.json("nouvel utilisateur : " + firstName + "" + lastName + "");
+          User.create({ firstname: firstname, lastname: lastname, role: role, email: email, password: hash }).then(function(user) {
+            
+            user.password = null;
+            res.json({message: "nouvel utilisateur : " + firstname + "" + lastname + "", 
+                      data: user});
+
           });
 
         }
@@ -34,26 +38,16 @@ exports.userRegister = (req, res) => {
 
 exports.userLogin = (req, res) => {
 
-        const mail = req.body.mail;
+        const email = req.body.email;
         const password = req.body.password;
 
-        User.findOne(mail).then(function(user) {
-          user.destroy();
-        }).then((user) => {
-          res.sendStatus(200);
-        });
+        User.findOne({ where: { email: email } }).then((result) => {
+          
+          if(result != null) {
       
-        db.query("SELECT * FROM users WHERE mail = ?", mail, 
-        (err, result) => {
-          if(err) {
-            res.send({err: err});
-          }
-      
-          if(result.length > 0) {
-      
-            bcrypt.compare(password, result[0].password, (error, response) => {
+            bcrypt.compare(password, result.password, (error, response) => {
                 if(response) {
-                  const id = result[0].id
+                  const id = result.id
                   const token = jwt.sign({id}, "jwtSecret", {
                     expiresIn: 300,
                   });
@@ -68,5 +62,7 @@ exports.userLogin = (req, res) => {
           else {
             res.send({ message: "User doesn't exist"});
           }
-        });
+
+        }).catch((err) => res.send({err: "err"}));
+    
 };

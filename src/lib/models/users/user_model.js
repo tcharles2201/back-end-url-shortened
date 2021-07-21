@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const sequelize = require('./../../../db/db_connection')
 const User = sequelize.define('user', {
-   user_id:{
+   id:{
       type:Sequelize.INTEGER,
       // Increment the value automatically
       autoIncrement:true,
@@ -15,13 +15,13 @@ const User = sequelize.define('user', {
    lastname: { type: Sequelize.STRING, allowNull:false },
    email: { type: Sequelize.STRING, allowNull:false },
    password: { type: Sequelize.STRING, allowNull:false},
-   role: { type: Sequelize.ENUM('Admin', 'User') },
    role: {
-    type: Sequelize.ENUM,
-    values: ['Admin', 'User']
+    type: Sequelize.STRING,
+    validate: { isIn: [['Admin', 'User']]}
   },
    // Column: Timestamps
-   createdAt: Sequelize.DATE,
-   updatedAt: Sequelize.DATE,
+}, { 
+     createdAt: "created_at",
+     updatedAt: "updated_at"
 })
 module.exports = User
