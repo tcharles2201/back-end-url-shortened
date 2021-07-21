@@ -31,6 +31,8 @@ exports.userRegister = (req, res) => {
             res.json({message: "nouvel utilisateur : " + firstname + "" + lastname + "", 
                       data: user});
 
+          }).catch((err) => {
+              res.json({ message: "Impossible d'ajouter l'utilisateur: " + email});
           });
 
         }
@@ -71,6 +73,7 @@ exports.userLogin = (req, res) => {
 
 // Get all Users
 exports.getAllUsers = (req, res) => {
+  console.log("hit");
   User.findAll().then((users) => {
     // Send all users as response
     res.status(200).json({
