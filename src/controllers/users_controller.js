@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const db = require("../db/db_connection");
 const saltRounds = 10;
+const userJwt = require('../middleware/jwtMiddleware')
 
 exports.isUserAuth = (req, res) => {
 
@@ -92,7 +93,8 @@ exports.getUserById = (req, res) => {
 
 // Update user by Id
 exports.updateUserById = (req, res) => {
-  const id = req.params.userId;
+  const decoded = userJwt.decode_token(req);
+  const id = decoded.id;
   User.update(
     {
       firstname: req.body.firstname,
