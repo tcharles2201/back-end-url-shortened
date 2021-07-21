@@ -34,6 +34,7 @@ services:
      - DB_USER=users_service
      - DB_PASS=123
      - DB_DATABASE=shortener
+     - SCHEME=http
     volumes:
      - ./src:/app/api
   pma:
