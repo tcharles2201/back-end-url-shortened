@@ -1,40 +1,27 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const Sequelize = require('sequelize')
+const sequelize = require('../../db/db_connection')
+const User = sequelize.define('user', {
+   id:{
+      type:Sequelize.INTEGER,
+      // Increment the value automatically
+      autoIncrement:true,
+      // user_id can not be null.
+      allowNull:false,
+      // To uniquely identify user
+      primaryKey:true
+   },
 
-const userSchema = new Schema({
-	firstname: String,
-    lastname: String,
-    role: {
-        type: String,
-        default: 'user',
-        enum: ["user",  "admin"]
-    },
-	email: {
-        unique: true,
-        required: true,
-        type: String,
-		trim: true,
-        match: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
-    },
-    password: {
-        type: String,
-        min: (8, translator.translate("FIVE_CHARACTERS_MIN")),
-        max: (32, translator.translate("32_CHARACTERS_MAX")),
-        required: translator.translate("PASSWORD_REQUIRED")
-    },
-},
-	{
-		timestamps: {
-			createdAt: 'created_at',
-			updatedAt: 'updated_at'
-		}
-	});
-
-
-
-const model = mongoose.model("User", userSchema);
-
-module.exports = {
-    Model: model,
-    Schema: userSchema
-};
+   firstname: { type: Sequelize.STRING, allowNull:false },
+   lastname: { type: Sequelize.STRING, allowNull:false },
+   email: { type: Sequelize.STRING, allowNull:false },
+   password: { type: Sequelize.STRING, allowNull:false},
+   role: {
+    type: Sequelize.STRING,
+    validate: { isIn: [['Admin', 'User']]}
+  },
+   // Column: Timestamps
+}, { 
+     createdAt: "created_at",
+     updatedAt: "updated_at"
+})
+module.exports = User

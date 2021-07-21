@@ -28,10 +28,12 @@ services:
      - db
     restart: on-failure
     environment:
-     - DATABASE_HOST=db
+     - HOST=db
      - PORT=8125
      - HOSTNAME=0.0.0.0
-     - HOST=localhost
+     - DB_USER=users_service
+     - DB_PASS=123
+     - DB_DATABASE=shortener
      - SCHEME=http
     volumes:
      - ./src:/app/api
