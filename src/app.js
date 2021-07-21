@@ -14,7 +14,6 @@ const port = 8125;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
@@ -26,6 +25,7 @@ app.use(
     })
   );
   
+  /*
   app.use(
     session({
       key: "userId",
@@ -37,7 +37,7 @@ app.use(
       }
     })
   );
- 
+*/ 
 autoloading(app);
 
 app.listen(port);

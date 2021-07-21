@@ -73,6 +73,8 @@ class LinkServices {
     }
 
     async getLink(link){
+        console.log(link);
+        console.log("test");
         const list = await Links.findAll({
             where: {
                 shortened_url: link

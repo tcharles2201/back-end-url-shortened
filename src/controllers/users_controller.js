@@ -54,7 +54,7 @@ exports.userLogin = (req, res) => {
                   const token = jwt.sign({id}, "jwtSecret", {
                     expiresIn: 300,
                   });
-                  req.session.user = result;
+                 // req.session.user = result;
                   res.json({auth: true, token: token, result: result});
                 } 
                 else {
@@ -73,7 +73,6 @@ exports.userLogin = (req, res) => {
 
 // Get all Users
 exports.getAllUsers = (req, res) => {
-  console.log("hit");
   User.findAll().then((users) => {
     // Send all users as response
     res.status(200).json({

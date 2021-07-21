@@ -70,3 +70,16 @@ exports.updateOne = async (req, res) => {
         res.status(400).end();
     }
 };
+
+exports.listByUser = async (req, res) => {
+    const service = new LinkService();
+
+    try {
+        const list = await service.findByUserId(req.params.user_id);
+
+        res.json(list);
+    }
+    catch (e){
+        res.status(400).end();
+    } 
+};

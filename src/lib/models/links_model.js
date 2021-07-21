@@ -41,16 +41,9 @@ class Links extends Table{
     }
 
     static fromId(id){
-        if (process.env.PORT === 80){
-            const url = `${process.env.SCHEME}://${process.env.HOST}/${id}`;
+        const url = `${process.env.SCHEME}://${process.env.HOST}/${id}`;
 
-            return (url);
-        }
-        else {
-            const url = `${process.env.SCHEME}://${process.env.HOST}:${process.env.PORT}/${id}`;
-
-            return (url);
-        }
+        return (url);
     }
 }
 
@@ -59,6 +52,7 @@ Links.init({
        type: DataTypes.NUMBER,
        primaryKey: true
     },
+    user_id: DataTypes.NUMBER,
     base_url: DataTypes.STRING,
     shortened_url: DataTypes.STRING,
     is_anonymous: DataTypes.NUMBER,
