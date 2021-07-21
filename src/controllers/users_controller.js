@@ -1,4 +1,4 @@
-const User = require('../lib/models/users/user_model');
+const User = require('../lib/models/user_model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const db = require("../db/db_connection");
@@ -65,4 +65,60 @@ exports.userLogin = (req, res) => {
 
         }).catch((err) => res.send({err: "err"}));
     
+};
+
+
+// Get all Users
+exports.getAllUsers = (req, res) => {
+  User.findAll().then((users) => {
+    // Send all users as response
+    res.status(200).json({
+      status: true,
+      data: users,
+    });
+  });
+};
+
+
+// Find a user by Id
+exports.getUserById = (req, res) => {
+  User.findByPk(req.params.userId).then((user) => {
+    res.status(200).json({
+      status: true,
+      data: user,
+    });
+  });
+};
+
+// Update user by Id
+exports.updateUserById = (req, res) => {
+  const id = req.params.userId;
+  User.update(
+    {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      role: req.body.role,
+    },
+    { where: { id: req.params.userId } }
+  ).then(() => {
+    res.status(200).json({
+        status: true,
+        message: "User updated successfully with id = " + id
+    });
+  });
+};
+
+
+// Delete a user by Id
+exports.deleteUserById = (req, res) => {
+  const id = req.params.userId;
+  User.destroy({
+    where: { id: id },
+  }).then(() => {
+    res.status(200).json({
+        status: true,
+        message: "User deleted successfully with id = " + id
+    });
+  });
 };

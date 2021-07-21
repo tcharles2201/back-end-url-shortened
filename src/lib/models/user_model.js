@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const sequelize = require('./../../../db/db_connection')
+const sequelize = require('../../db/db_connection')
 const User = sequelize.define('user', {
    id:{
       type:Sequelize.INTEGER,

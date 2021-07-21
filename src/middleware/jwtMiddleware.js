@@ -1,10 +1,7 @@
-const Context = require("../lib/services/context");
-const { router } = Context.Pull();
-const authController = require("../controllers/authenticationController");
 const JsonWebTokenError = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET || "jwtSecret";
 
-const verifyJWT = (req, res, next) => {
+exports.verifyJWT = (req, res, next) => {
     const token = req.headers["x-access-token"];
 
     if(!token) {
@@ -23,8 +20,3 @@ const verifyJWT = (req, res, next) => {
     }
 
 }
-
-router.get('/api/users/authenticate', verifyJWT, authController.isUserAuth);
-router.post('/api/users/', authController.userRegister);
-router.post('/api/users/login', authController.userLogin);
-
