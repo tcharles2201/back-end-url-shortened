@@ -32,6 +32,7 @@ exports.userRegister = (req, res) => {
                       data: user});
 
           }).catch((err) => {
+            console.log(err);
               res.json({ message: "Impossible d'ajouter l'utilisateur: " + email});
           });
 
@@ -52,7 +53,7 @@ exports.userLogin = (req, res) => {
                 if(response) {
                   const id = result.id
                   const token = jwt.sign({id}, "jwtSecret", {
-                    expiresIn: 300,
+                    expiresIn: 60 * 60 * 24,
                   });
                  // req.session.user = result;
                   res.json({auth: true, token: token, result: result});

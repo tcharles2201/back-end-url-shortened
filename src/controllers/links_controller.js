@@ -4,11 +4,21 @@ const LinkService = require("../lib/services/links_service");
 exports.save = async (req, res) => {
     try {
         const service = new LinkService();
-        const saved = await service.newLink(req.body);
-    
-        res.status(201).json(saved);
-    }
-    catch(e){
+        const args = req.body;
+
+        if (args.shortened_url) {
+            if (!service.checkId(args.shortened_url)) {
+                throw new Error("Unique Id");
+            }
+            const saved = await service.save(args);
+
+            res.status(201).json(saved);
+        } else {
+            const saved = await service.newLink(args);
+
+            res.status(201).json(saved);
+        }
+    } catch (e) {
         res.status(400).end();
     }
 };
@@ -20,7 +30,7 @@ exports.findAll = async (req, res) => {
     res.json(list);
 };
 
-exports.deleteOne  = async (req, res) => {
+exports.deleteOne = async (req, res) => {
     const service = new LinkService();
 
     try {
@@ -30,8 +40,7 @@ exports.deleteOne  = async (req, res) => {
         res.status(200).json({
             message: "the link is delete"
         });
-    }
-    catch (e){
+    } catch (e) {
         res.status(400).end();
     }
 }
@@ -43,15 +52,13 @@ exports.redirectTo = async (req, res) => {
     const link = await service.getLink(url);
 
 
-    if (!link){
+    if (!link) {
         res.status(404).end();
-    }
-    else if (link.hasExpired()){
+    } else if (link.hasExpired()) {
         res.status(400).json({
             message: "The link has expired"
         });
-    }
-    else {
+    } else {
         res.json({
             url: link.base_url
         });
@@ -60,13 +67,32 @@ exports.redirectTo = async (req, res) => {
 
 exports.updateOne = async (req, res) => {
     const service = new LinkService();
+    const args = req.body;
 
     try {
-        const list = await service.refreshLink(req.body);
+        if (args.shortened_url) {
+            const link = await service.findById(args.id);
 
-        res.json(list);
-    }
-    catch (e){
+            console.log(link);
+            if (link.shortened_url !== args.shortened_url 
+                && !service.checkId(args.shortened_url)) {
+                throw new Error("Unique Id");
+            }
+            console.log("passed !");
+            const saved = await service.updateOne(args);
+
+            if (!saved){
+                res.status(400).end();
+                return;
+            }
+            res.status(200).json(saved);
+        } else {
+            const saved = await service.refreshLink(req.body);
+
+            res.status(200).json(saved);
+        }
+    } catch (e) {
+        console.log(e.message);
         res.status(400).end();
     }
 };
@@ -78,8 +104,7 @@ exports.listByUser = async (req, res) => {
         const list = await service.findByUserId(req.params.user_id);
 
         res.json(list);
-    }
-    catch (e){
+    } catch (e) {
         res.status(400).end();
-    } 
+    }
 };

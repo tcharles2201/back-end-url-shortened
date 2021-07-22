@@ -33,10 +33,18 @@ class LinkServices {
     }
 
     async updateOne(args){
-        const link = new Links(args);
-        const saved = await link.set(args);
-
-        return (saved);
+        const id = args.id;
+        args.id = undefined;
+        const ret = await Links.update(args, {
+            where: {
+                id
+            }
+        });
+        console.log(ret);
+        if (ret){
+            return (ret);
+        }
+        return (null);
     }
 
     async refreshLink(args){
@@ -73,8 +81,6 @@ class LinkServices {
     }
 
     async getLink(link){
-        console.log(link);
-        console.log("test");
         const list = await Links.findAll({
             where: {
                 shortened_url: link
@@ -92,7 +98,7 @@ class LinkServices {
             where: {
                 user_id: userId
             },
-            order: [["id", "ASC"]]
+            order: [["id", "DESC"]]
         }));
     }
 }
