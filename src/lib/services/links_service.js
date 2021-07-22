@@ -40,7 +40,7 @@ class LinkServices {
                 id
             }
         });
-        console.log(ret);
+
         if (ret){
             return (ret);
         }
@@ -91,6 +91,17 @@ class LinkServices {
             return (list[0]);
         }
         return (null);
+    }
+
+    async hasLink(link){
+        const list = await Links.findAll({
+            where: {
+                shortened_url: link
+            }
+        });
+
+        console.log(list);
+        return (list && list.length);
     }
 
     async findByUserId(userId){

@@ -73,12 +73,14 @@ exports.updateOne = async (req, res) => {
         if (args.shortened_url) {
             const link = await service.findById(args.id);
 
-            console.log(link);
+            if (!link){
+                res.status(400).end();
+                return;
+            }
             if (link.shortened_url !== args.shortened_url 
-                && !service.checkId(args.shortened_url)) {
+                && await service.hasLink(args.shortened_url)) {
                 throw new Error("Unique Id");
             }
-            console.log("passed !");
             const saved = await service.updateOne(args);
 
             if (!saved){
