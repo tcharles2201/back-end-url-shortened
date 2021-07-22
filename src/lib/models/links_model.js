@@ -11,6 +11,7 @@ class Links extends Table{
         this.is_anonymous = args["is_anonymous"];
         this.expired_at = args["expired_at"];
         this.user_id = args["user_id"];
+        this.short_description = args["short_description"];
         this.created_at = args["created_at"];
         this.updated_at = args["updated_at"];
     }
@@ -41,7 +42,7 @@ class Links extends Table{
     }
 
     static fromId(id){
-        const url = `${process.env.SCHEME}://${process.env.HOST}/${id}`;
+        const url = `${process.env.SCHEME}://${process.env.HOST}/redirect/${id}`;
 
         return (url);
     }
@@ -54,6 +55,7 @@ Links.init({
     },
     user_id: DataTypes.NUMBER,
     base_url: DataTypes.STRING,
+    short_description: DataTypes.STRING,
     shortened_url: DataTypes.STRING,
     is_anonymous: DataTypes.NUMBER,
     expired_at: DataTypes.DATE,

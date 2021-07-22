@@ -12,4 +12,4 @@ router.post("/api/links", [validatorMiddleware.validate(linksSchema)], controlle
 router.get("/api/links/:user_id/user", [verifyJWT], controller.listByUser);
 router.delete("/api/links/:id", controller.deleteOne);
 router.put("/api/links",  controller.updateOne);
-router.get("/api/:code/links", controller.redirectTo);
+router.get("/redirect/:code", controller.redirectTo);

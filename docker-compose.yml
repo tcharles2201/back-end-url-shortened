@@ -29,7 +29,7 @@ services:
     restart: on-failure
     environment:
      - DATABASE_HOST=db
-     - HOST=localhost
+     - HOST=localhost:3000
      - PORT=8125
      - HOSTNAME=0.0.0.0
      - DB_USER=users_service

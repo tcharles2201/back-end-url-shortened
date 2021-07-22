@@ -52,7 +52,7 @@ exports.redirectTo = async (req, res) => {
         });
     }
     else {
-        res.status(200).json({
+        res.json({
             url: link.base_url
         });
     }
