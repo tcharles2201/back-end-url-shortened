@@ -104,7 +104,7 @@ exports.updateUserById = (req, res) => {
       lastname: req.body.lastname,
       email: req.body.email
     },
-    { where: { id: req.params.userId } }
+    { where: { id: id } }
   ).then(() => {
     res.status(200).json({
         status: true,
