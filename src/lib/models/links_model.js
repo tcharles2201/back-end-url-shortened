@@ -51,7 +51,8 @@ class Links extends Table{
 Links.init({
     id: {
        type: DataTypes.NUMBER,
-       primaryKey: true
+       primaryKey: true,
+       autoIncrement:true,
     },
     user_id: DataTypes.NUMBER,
     base_url: DataTypes.STRING,
