@@ -37,6 +37,9 @@ Voici les principales technologies et framework utilisé dans le projet :
 - Docker
 - Sequelize
 
+# Documenation
+
+Les informations sur le fonctionnement et l'utilisation de l'API du serveur sont trouvable dans le [dossier /doc](./doc) du projet.
 
 ## Partie Front-end du projet
 
