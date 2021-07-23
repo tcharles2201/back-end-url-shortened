@@ -5,11 +5,12 @@ const jwtMiddleware = require("../middleware/jwtMiddleware");
 
 exports.save = async (req, res) => {
     try {
-        const token = jwtMiddleware.decode_token(req, res);
         const service = new LinkService();
         const args = req.body;
 
         if (args.is_anonymous === 0){
+            const token = jwtMiddleware.decode_token(req, res);
+
             args.user_id = token.id;
         }
         if (args.shortened_url) {
@@ -25,6 +26,7 @@ exports.save = async (req, res) => {
             res.status(201).json(saved);
         }
     } catch (e) {
+        console.log(e.message);
         res.status(400).end();
     }
 };
