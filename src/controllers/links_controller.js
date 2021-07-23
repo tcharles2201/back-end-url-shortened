@@ -1,11 +1,17 @@
+const { link } = require("joi");
 const Links = require("../lib/models/links_model");
 const LinkService = require("../lib/services/links_service");
+const jwtMiddleware = require("../middleware/jwtMiddleware");
 
 exports.save = async (req, res) => {
     try {
+        const token = jwtMiddleware.decode_token(req, res);
         const service = new LinkService();
         const args = req.body;
 
+        if (args.is_anonymous === 0){
+            args.user_id = token.id;
+        }
         if (args.shortened_url) {
             if (!service.checkId(args.shortened_url)) {
                 throw new Error("Unique Id");
@@ -70,13 +76,22 @@ exports.updateOne = async (req, res) => {
     const args = req.body;
 
     try {
-        if (args.shortened_url) {
-            const link = await service.findById(args.id);
+        const id = args.id;
+        const token = jwtMiddleware.decode_token(req, res);
+        const link = await service.findById(id);
 
-            if (!link){
-                res.status(400).end();
-                return;
-            }
+        if (!link){
+            res.status(400).end();
+            return;
+        }
+        if (link.user_id !== token.id){
+            res.status(403).json({
+                message: "forbidden"
+            });
+        }
+        args.is_anonymous = link.is_anonymous;
+        args.user_id = link.user_id;
+        if (args.shortened_url) {
             if (link.shortened_url !== args.shortened_url 
                 && await service.hasLink(args.shortened_url)) {
                 throw new Error("Unique Id");
@@ -87,11 +102,14 @@ exports.updateOne = async (req, res) => {
                 res.status(400).end();
                 return;
             }
-            res.status(200).json(saved);
-        } else {
-            const saved = await service.refreshLink(req.body);
+            const ret = await service.findById(id);
 
-            res.status(200).json(saved);
+            res.status(200).json(ret);
+        } else {
+            const saved = await service.refreshLink(args);
+            const ret = await service.findById(id);
+
+            res.status(200).json(ret);
         }
     } catch (e) {
         console.log(e.message);
@@ -103,7 +121,8 @@ exports.listByUser = async (req, res) => {
     const service = new LinkService();
 
     try {
-        const list = await service.findByUserId(req.params.user_id);
+        const token = jwtMiddleware.decode_token(req, res);
+        const list = await service.findByUserId(token.id);
 
         res.json(list);
     } catch (e) {

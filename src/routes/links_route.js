@@ -9,7 +9,7 @@ const { verifyJWT } = require("../middleware/jwtMiddleware");
 
 router.get("/api/links", [isAdmin], controller.findAll);
 router.post("/api/links", [validatorMiddleware.validate(linksSchema)], controller.save);
-router.get("/api/links/:user_id/user", [verifyJWT], controller.listByUser);
+router.get("/api/links/user", [verifyJWT], controller.listByUser);
 router.delete("/api/links/:id", controller.deleteOne);
 router.put("/api/links",  controller.updateOne);
 router.get("/redirect/:code", controller.redirectTo);

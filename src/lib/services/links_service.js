@@ -14,10 +14,9 @@ class LinkServices {
     }
 
     async save(args){
-        const link = new Links(args);
-        const saved = await link.save();
+        const link = await Links.create(args);
 
-        return (saved);
+        return (link);
     }
 
     async newLink(args){
