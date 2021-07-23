@@ -24,6 +24,10 @@ Pour pouvoir compiler et lancer le serveur depuis les sources les logiciels suiv
 Dans le cadre d'une mise en production, l'application peut-être lancer, de la manière suivante: `make`.
 Dans le cadre de développement, l'application peut-être lancer de la manière suivante: `make dev`.
 
+La configuration du serveur de production, se fait dans le fichier .env.production.
+Tandis que la configuration du serveur de développement, se fait dans le fichier .env.development.
+
+
 # Technologies
 
 Voici les principales technologies et framework utilisé dans le projet :
