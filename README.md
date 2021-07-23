@@ -38,7 +38,7 @@ Voici les principales technologies et framework utilisé dans le projet :
 - Sequelize
 
 
-## Partie Back-end du projet
+## Partie Front-end du projet
 
 Voici le lien vers la partie Front-end de notre projet :
 - [Front-end URL Shortened](https://github.com/tcharles2201/front-end-url-shortened)
