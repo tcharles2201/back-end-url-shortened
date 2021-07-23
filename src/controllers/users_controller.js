@@ -102,8 +102,7 @@ exports.updateUserById = (req, res) => {
     {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      email: req.body.email,
-      role: req.body.role,
+      email: req.body.email
     },
     { where: { id: req.params.userId } }
   ).then(() => {
