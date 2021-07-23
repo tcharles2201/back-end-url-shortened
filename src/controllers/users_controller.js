@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const db = require("../db/db_connection");
 const saltRounds = 10;
-const userJwt = require('../middleware/jwtMiddleware')
+const userJwt = require('../middleware/jwtMiddleware');
+const jwt_secret = process.env.JWT_SECRET || "jwtSecret";
 
 exports.isUserAuth = (req, res) => {
 
@@ -57,7 +58,7 @@ exports.userLogin = (req, res) => {
             bcrypt.compare(password, result.password, (error, response) => {
                 if(response) {
                   const id = result.id
-                  const token = jwt.sign({id}, "jwtSecret", {
+                  const token = jwt.sign({id}, jwt_secret, {
                     expiresIn: 60 * 60 * 24,
                   });
                  // req.session.user = result;

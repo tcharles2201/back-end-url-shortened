@@ -23,19 +23,12 @@ services:
       - '-c'
       - 'npm install && npm start'
     ports:
-     - "8125:8125"
+     - "8080:8080"
     depends_on:
      - db
     restart: on-failure
     environment:
-     - DATABASE_HOST=db
-     - HOST=localhost:3000
-     - PORT=8125
-     - HOSTNAME=0.0.0.0
-     - DB_USER=users_service
-     - DB_PASS=123
-     - DB_DATABASE=shortener
-     - SCHEME=http
+     - NODE_ENV=production
     volumes:
      - ./src:/app/api
   pma:
@@ -48,4 +41,4 @@ services:
       - MYSQL_ROOT_PASSWORD=1234
       - PMA_ARBITRARY=1
     ports:
-      - "8080:80"
+      - "5000:80"
