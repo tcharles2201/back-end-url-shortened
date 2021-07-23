@@ -12,6 +12,8 @@ exports.isUserAuth = (req, res) => {
 };
 
 exports.userRegister = (req, res) => {
+
+      console.log("nouvel utilisateur enregistré");
       const firstname = req.body.firstname;
       const lastname = req.body.lastname;
       const role = req.body.role;
@@ -26,13 +28,16 @@ exports.userRegister = (req, res) => {
         else {
 
           User.create({ firstname: firstname, lastname: lastname, role: role, email: email, password: hash }).then(function(user) {
-            
             user.password = null;
             res.json({message: "nouvel utilisateur : " + firstname + "" + lastname + "", 
                       data: user});
 
           }).catch((err) => {
+            console.log(firstname);
+            console.log(lastname);
+            console.log(role);
             console.log(err);
+              res.status(400);
               res.json({ message: "Impossible d'ajouter l'utilisateur: " + email});
           });
 
@@ -41,7 +46,7 @@ exports.userRegister = (req, res) => {
 };
 
 exports.userLogin = (req, res) => {
-
+        console.log("utilisateur connecté");
         const email = req.body.email;
         const password = req.body.password;
 
@@ -64,10 +69,11 @@ exports.userLogin = (req, res) => {
                     });
                 }
           else {
+            res.status(404);
             res.send({ message: "User doesn't exist"});
           }
 
-        }).catch((err) => res.send({err: "err"}));
+        }).catch((err) => { res.status(400); res.send({err: "err"}); });
     
 };
 
