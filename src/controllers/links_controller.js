@@ -1,4 +1,3 @@
-const { link } = require("joi");
 const Links = require("../lib/models/links_model");
 const LinkService = require("../lib/services/links_service");
 const jwtMiddleware = require("../middleware/jwtMiddleware");
@@ -8,6 +7,11 @@ exports.save = async (req, res) => {
         const service = new LinkService();
         const args = req.body;
 
+        console.log(args);
+        if (await service.getLink(args.base_url) !== null || 
+                args.base_url.startsWith(`${process.env.SCHEME}://${process.env.HOST}/redirect`)){
+            res.status(400).end();
+        }
         if (args.is_anonymous === 0){
             const token = jwtMiddleware.decode_token(req, res);
 
@@ -58,7 +62,6 @@ exports.redirectTo = async (req, res) => {
     const code = req.params.code;
     const url = Links.fromId(code);
     const link = await service.getLink(url);
-
 
     if (!link) {
         res.status(404).end();

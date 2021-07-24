@@ -21,8 +21,10 @@ class LinkServices {
 
     async newLink(args){
         const id = UniqueId(this.checkId);
+        console.log(id);
         const url = Links.fromId(id);
 
+        console.log(url);
         args.shortened_url = url;
         return (await this.save(args));
     }
@@ -86,6 +88,7 @@ class LinkServices {
             }
         });
 
+        console.log(link);
         if (list.length){
             return (list[0]);
         }
